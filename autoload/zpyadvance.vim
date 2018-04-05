@@ -22,13 +22,7 @@ function! zpyadvance#config() abort "{{{
     call <SID>Ctrlp()
     call <SID>VimTmuxNavigator()
     call <SID>Ycm()
-    "call <SID>Minibufexpl()
     "call <SID>Showmarks()
-    "call <SID>Neocomplcache()
-    "call <SID>DoxygenToolkit()
-    "call <SID>Workspace()
-    "call <SID>Syntastic()
-    "call <SID>JediVim()
 endfunction "}}}
 
 
@@ -58,11 +52,6 @@ function! s:Ack() "{{{
     endif
     nnoremap <silent> <F2> :Ack <C-R>=expand("<cword>")<CR><CR>
     nnoremap <silent> <F3> :Ack -w <C-R>=expand("<cword>")<CR><CR>
-endfunction "}}}
-
-
-function! s:Minibufexpl() "{{{
-    let g:miniBufExplorerMoreThanOne=1
 endfunction "}}}
 
 
@@ -128,94 +117,6 @@ function! s:IsLeftColValid() "{{{
 endfunction "}}}
 
 
-function! s:Neocomplcache() "{{{
-    let g:neocomplcache_enable_at_startup = 1
-    let g:neocomplcache_disable_auto_complete = 0
-    let g:neocomplcache_enable_auto_select = 1
-    let g:neocomplcache_enable_smart_case = 1
-    let g:neocomplcache_enable_underbar_completion = 0
-    let g:neocomplcache_auto_completion_start_length = 2
-    let g:neocomplcache_min_syntax_length = 3
-
-    " Define dictionary.
-    let g:neocomplcache_dictionary_filetype_lists = {
-                \ 'default' : '',
-                \ 'vimshell' : $HOME.'/.vimshell_hist',
-                \ 'scheme' : $HOME.'/.gosh_completions'
-                \ }
-
-    " Define keyword.
-    if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {}
-    endif
-    let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-    " mappings
-    inoremap <expr><C-l> neocomplcache#complete_common_string()
-    inoremap <expr><C-g> neocomplcache#undo_completion()
-    inoremap <expr><C-e> neocomplcache#cancel_popup()
-    inoremap <expr><BS> neocomplcache#smart_close_popup() ."\<BS>"
-
-    inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
-    "inoremap <expr><SPACE> pumvisible() ? neocomplcache#close_popup() . "\<SPACE>" : "\<SPACE>"
-    inoremap <expr><TAB> pumvisible() ? "\<C-n>" : <SID>IsLeftColValid() ? "\<C-x>\<C-u>" : "\<TAB>"
-
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    "autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-endfunction "}}}
-
-
-function! s:DoxygenToolkit() "{{{
-    let g:DoxygenToolkit_authorName="zhengpeiyuan(zhengpeiyuan@baidu.com)"
-    let g:DoxygenToolkit_licenseTag="Copyright (c) XXX. All Rights Reserved\<enter>"
-    let g:DoxygenToolkit_briefTag_pre = "@brief "
-    let g:DoxygenToolkit_paramTag_pre = "@param "
-    let g:DoxygenToolkit_returnTag = "@return "
-    let g:DoxygenToolkit_briefTag_funcName = "no"
-    let g:DoxygenToolkit_maxFunctionProtoLines = 30
-endfunction "}}}
-
-
-function! s:AddCommonIncludePaths() "{{{
-    let &path = &path . ',/usr/include/c++/4.9'
-    let &path = &path . ',/usr/include/x86_64-linux-gnu/c++/4.9'
-    let &path = &path . ',/usr/include/c++/4.9/backward'
-    let &path = &path . ',/usr/lib/gcc/x86_64-linux-gnu/4.9/include'
-    let &path = &path . ',/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed'
-    let &path = &path . ',/usr/local/include'
-    let &path = &path . ',/usr/include'
-endfunction "}}}
-
-
-function! s:AddOtherIncludePaths(ifile) "{{{
-    if filereadable(a:ifile)
-        for line in readfile(a:ifile)
-            if line =~ '^-I'
-                let line = substitute(line, '^-I', '', 'g')
-                if line =~ '^./'
-                    let line = substitute(line, '^./', '', 'g')
-                endif
-                let &path = &path . ',' . line
-            endif
-        endfor
-    endif
-endfunction "}}}
-
-
-function! s:Workspace() "{{{
-    call <SID>AddCommonIncludePaths()
-    call <SID>AddOtherIncludePaths('.clang_complete')
-    if filereadable("workspace.vim")
-        source workspace.vim
-    endif
-endfunction "}}}
-
-
 function! s:ZpyOneMake() "{{{
     nnoremap <silent> <F7> :OneMake<CR>
 endfunction "}}}
@@ -234,34 +135,3 @@ function! s:Ycm() "{{{
     let g:ycm_complete_in_comments=1
     let g:ycm_seed_identifiers_with_syntax = 1
 endfunction "}}}
-
-function! s:Syntastic() "{{{
-    let g:syntastic_aggregate_errors = 1
-    let g:syntastic_enable_balloons = 0
-    let g:syntastic_auto_jump = 1
-    "let g:syntastic_auto_loc_list = 1
-    "let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_error_symbol = 'E>'
-    let g:syntastic_warning_symbol = 'W>'
-    let g:syntastic_mode_map = { 'mode': 'passive',
-                               \ 'active_filetypes': ['lua', 'go', ],
-                               \ 'passive_filetypes': [] }
-    let g:syntastic_python_checkers = ['pylint', 'python', ]
-
-    nnoremap <silent> <F6> :SyntasticCheck<CR>
-    nnoremap <silent> [n :lprev<CR>
-    nnoremap <silent> ]n :lnext<CR>
-endfunction "}}}
-
-
-function! s:JediVim() "{{{
-    " disable auto select first candidate to compatible of neocomplcache
-    "let g:jedi#auto_initialization = 1
-    let g:jedi#popup_on_dot = 0
-    autocmd FileType python let b:did_ftplugin = 1
-
-    let g:jedi#use_tabs_not_buffers = 0
-    let g:jedi#completions_command = "<C-N>"
-    let g:jedi#goto_assignments_command = "<leader>a"
-endfunction "}}}
-

@@ -26,17 +26,7 @@ function s:Common() "{{{
     set t_Co=256
     set background=dark
     colorscheme gruvbox
-    "colorscheme desert
-    "set guifont=Luxi\ Mono\12       " set font
-    
-    " euc-cn is gbk
-    "set fileencodings=euc-cn,utf-8,cp936,latin1,gb18030
-    "set encoding=euc-cn
-    "set termencoding=euc-cn
-    "set fileencoding=euc-cn
-    "au FileType xhtml,html,css,javascript,php setl fileencoding=utf-8
-    "au FileType xhtml,html,css,javascript,php setl encoding=utf-8
-    set fileencodings=utf-8,euc-cn,cp936,latin1,gb18030
+    set fileencodings=utf-8,euc-cn,cp936,latin1,gb18030     " euc-cn is gbk
     set encoding=utf-8
     set termencoding=utf-8
     set fileencoding=utf-8
@@ -77,17 +67,17 @@ function s:Common() "{{{
 
     "----- about status bar
     "set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
-    set statusline=
-    set statusline+=%-3.3n\                      " buffer number
-    set statusline+=%f\                          " filename
-    set statusline+=%h%m%r%w                     " status flags
-    set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type
-    set statusline+=%=                           " right align remainder
-    set statusline+=0x%-8B                       " character value
-    set statusline+=%-14(%l,%c%V%)               " line, character
-    set statusline+=%<%P                         " file position
-    set laststatus=2                " always show the status bar
-    set ruler                       " show the cursor position all the time
+    "set statusline=
+    "set statusline+=%-3.3n\                      " buffer number
+    "set statusline+=%f\                          " filename
+    "set statusline+=%h%m%r%w                     " status flags
+    "set statusline+=\[%{strlen(&ft)?&ft:'none'}] " file type
+    "set statusline+=%=                           " right align remainder
+    "set statusline+=0x%-8B                       " character value
+    "set statusline+=%-14(%l,%c%V%)               " line, character
+    "set statusline+=%<%P                         " file position
+    "set laststatus=2                " always show the status bar
+    "set ruler                       " show the cursor position all the time
 
     "----- highlight cursor position
     "set cursorline
