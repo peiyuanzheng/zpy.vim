@@ -37,7 +37,7 @@ function s:Common() "{{{
     set autoindent
     set smartindent
     " fix no indent when input '#' as first character
-    autocmd FileType python inoremap # X<c-h>#<space>
+    autocmd FileType python inoremap # X<c-h>#
     set matchpairs=(:),{:},[:],<:>
     set showmatch                    " auto match, eg. ()
     set showcmd
@@ -54,7 +54,7 @@ function s:Common() "{{{
     set hidden
     set scrolloff=2
     set listchars=tab:>-,trail:-,nbsp:%,eol:$
-    "set textwidth=100
+    set textwidth=100
     " highlight column after 'textwidth'
     set colorcolumn=+1
     set wildignore=*.o,*.obj,*.bak,*~,*.exe,*.pyc

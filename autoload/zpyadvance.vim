@@ -50,7 +50,8 @@ function! s:Ack() "{{{
     if executable('ag')
         let g:ackprg = 'ag -U --vimgrep --ignore build'
     endif
-    nnoremap <silent> <F2> :Ack <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <silent> <F2> :Ack -s <C-R>=expand("<cword>")<CR><CR>
+    nnoremap <silent> <F3> :Ack -sw <C-R>=expand("<cword>")<CR><CR>
     nnoremap <silent> <F3> :Ack -w <C-R>=expand("<cword>")<CR><CR>
 endfunction "}}}
 
@@ -127,6 +128,8 @@ function! s:Ycm() "{{{
     nnoremap <leader>t :YcmCompleter GetType<CR>
     nnoremap <leader>g :YcmCompleter GoTo<CR>
     nnoremap <leader>ji :YcmCompleter GoToImprecise<CR>
+    nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>    " turn off YCM
+    nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>    " turn on YCM
     let g:ycm_show_diagnostics_ui = 1
     let g:ycm_error_symbol = '>*'
     let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
